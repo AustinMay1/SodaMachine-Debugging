@@ -13,7 +13,7 @@ class Customer:
         will_proceed = False
         customer_payment = []
         user_interface.output_text("Continue to add coins until you are ready to insert them into the machine")
-        while will_proceed:
+        while will_proceed == False:
             user_interface.display_can_cost(selected_soda)
             user_interface.display_payment_value(customer_payment)
             coin_name = user_interface.coin_selection()
@@ -62,8 +62,8 @@ class Customer:
 
     def check_backpack(self):
         """Will display the cans contained in purchased_cans list in backpack"""
-        if self.backpack.purchased_cans.length > 0:
+        if len(self.backpack.purchased_cans) == 0:
             user_interface.output_text("You have no cans in your backpack")
         else:
             for can in self.backpack.purchased_cans:
-                user_interface.output_text(can.name)
+                user_interface.output_text(can.name())
