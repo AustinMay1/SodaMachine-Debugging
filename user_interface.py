@@ -1,6 +1,5 @@
-import os
-import coins
 from cans import Can
+import os
 
 
 def simulation_main_menu():
@@ -40,7 +39,8 @@ def display_customer_wallet_info(coins_list, total_value):
 def display_welcome():
     """Initial method asking user if they'll make a purchase. No errors."""
     print("\nWelcome to the soda machine.  We only take coins as payment. \n")
-    user_response = continue_prompt("Would you like to make a purchase? (y/n):")
+    user_response = continue_prompt(
+        "Would you like to make a purchase? (y/n):")
     if user_response:
         return True
     else:
@@ -76,17 +76,18 @@ def soda_selection(inventory):
         print("Please choose from the following options:")
         i = 1
         for can in soda_options:
-            print(f"\nEnter -{i}- for {can.name} : ${can.price}")
+            print(f"\n\tEnter -{i}- for {can.name} : ${can.price}")
             i += 1
         user_selection = try_parse_int(input("Selection:"))
-        validated_user_selection = validate_coin_choice(user_selection, soda_options)
+        validated_user_selection = validate_coin_choice(
+            user_selection, soda_options)
     return validated_user_selection[1]
 
 
 def validate_coin_choice(selection, unique_cans):
     """Translates user menu selection into the name of can that was chosen. No errors."""
     if 0 < selection <= len(unique_cans):
-        return True, unique_cans[selection - 1]
+        return True, unique_cans[selection - 1].name
     else:
         print("Not a valid selection\n")
         return False, None
@@ -115,7 +116,7 @@ def get_unique_can_names(inventory):
 
 def display_can_cost(selected_can):
     """Displays the name of a can and its price"""
-    print(f'The price of a {selected_can} is ${selected_can}')
+    print(f'The price of a {selected_can.name} is ${selected_can.price}')
 
 
 def display_payment_value(customer_payment):
@@ -155,8 +156,8 @@ def validate_coin_selection(selection):
     return switcher.get(selection, (False, None))
 
 
-def end_message(soda_name, change_amount):
+def end_message(soda, change_amount):
     """Closing message displaying name of soda purchased and amount of change returned"""
-    print(f'Enjoy your {soda_name}')
-    if change_amount >= 0:
+    print(f'Enjoy your {soda.name}')
+    if change_amount > 0:
         print(f'Dispensing ${change_amount}')
